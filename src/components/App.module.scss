@@ -1,0 +1,30 @@
+.App {
+  padding: 3rem 5rem 0;
+
+  .Header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: auto;
+    margin-bottom: 2rem;
+    background: transparent;
+    cursor: auto;
+    user-select: none;
+
+    .Title {
+      margin: 0;
+      color: #1890ff;
+    }
+
+    .Description {
+      margin: -1rem 0 0.5rem;
+    }
+  }
+
+  .Content {
+    display: flex;
+    align-self: center;
+    flex-direction: column;
+    align-items: center;
+  }
+}

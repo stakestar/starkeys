@@ -1,0 +1,22 @@
+.Form {
+  display: flex;
+  flex-direction: column;
+  width: 30rem;
+
+  .Card {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .InputNumber {
+    display: flex;
+  }
+
+  .Submit {
+    height: 5rem;
+    margin: 2rem auto;
+    padding-inline: 2rem;
+    border-radius: 3rem;
+    font-size: 1.25rem;
+  }
+}
