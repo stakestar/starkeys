@@ -2,6 +2,7 @@ import { Alert, Button, Layout, Space, Steps, Typography } from 'antd'
 
 import styles from './App.module.scss'
 import { Form } from './Form'
+import { ParseCommand } from './ParseCommand'
 
 const { Header, Footer, Content } = Layout
 const { Title, Text, Link } = Typography
@@ -15,17 +16,7 @@ export function App() {
         <Text className={styles.Description} type="secondary">
           Generate KeyShare file from your Keystore file
         </Text>
-        <Alert
-          message="Key Distributor CLI command support"
-          type="info"
-          description={
-            <>
-              You can <Link>parse a predefined command for Key Distributor CLI</Link> to autofill
-              the form
-            </>
-          }
-          showIcon
-        />
+        <ParseCommand />
       </Header>
       <Content className={styles.Content}>
         <Form />
