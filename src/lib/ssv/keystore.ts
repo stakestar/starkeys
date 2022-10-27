@@ -1,4 +1,4 @@
-import EthereumKeyStore from 'eth2-keystore-js'
+import { EthereumKeyStore } from "ssv-keys";
 
 export const validateKeystorePassword = async (keyStoreData: string, password: string): Promise<boolean> => {
     const keyStore = new EthereumKeyStore(keyStoreData);
