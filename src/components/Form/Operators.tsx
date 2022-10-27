@@ -29,7 +29,7 @@ export function Operators() {
     <div>
       <div className={styles.Header}>
         <Typography className={styles.Column1}>Id</Typography>
-        <Typography className={styles.Column2}>Public Key</Typography>
+        <Typography className={styles.Column2}>Public key</Typography>
       </div>
       {operators.map((operator, index) => (
         <Input.Group className={styles.Group} key={index} compact>

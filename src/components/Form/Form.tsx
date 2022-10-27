@@ -10,7 +10,7 @@ const { Item } = AndtForm
 const { Title } = Typography
 
 export function Form() {
-  const { actions, operators, ssvAmount } = useAppState()
+  const { actions, keystoreFile, keystorePassword, operators, ssvAmount } = useAppState()
 
   const onFinish = (values: any) => {
     console.log('Success:', values)
@@ -18,7 +18,7 @@ export function Form() {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
-    console.log('operators', operators)
+    console.log('form data', { keystoreFile, keystorePassword, operators, ssvAmount })
   }
 
   return (
@@ -31,7 +31,7 @@ export function Form() {
       initialValues={{ remember: true }}
       autoComplete="off"
     >
-      <Card className={styles.Card}>
+      <Card className={styles.Card} bodyStyle={{ padding: 0 }}>
         <Item>
           <Title level={3}>Keystore file</Title>
           <KeystoreFile />
@@ -43,8 +43,8 @@ export function Form() {
           <Title level={3}>Keystore password</Title>
           <Input.Password
             placeholder="Input password"
-            // onChange={({ target }) => setPassword(target.value)}
-            // value={password}
+            value={keystorePassword}
+            onChange={({ target }) => actions.setKeystorePassword(target.value)}
           />
         </Item>
         <Item>
