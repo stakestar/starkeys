@@ -1,19 +1,59 @@
-import { Alert, Input, Modal, Typography } from 'antd'
-import { useCallback, useState } from 'react'
+import { Alert, Input, InputRef, Modal, Typography } from 'antd'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { useAppState } from '../../hooks'
 import styles from './ParseCommand.module.scss'
 import { parseCommandArgs } from './parseCommandArgs'
 
 export function ParseCommand() {
+  const { actions } = useAppState()
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [value, setValue] = useState('')
+  const ref = useRef<InputRef>(null)
 
-  const onClickParse = useCallback((command: string) => {
-    const args = parseCommandArgs(command)
+  useEffect(() => {
+    if (isModalOpen) {
+      ref.current?.focus()
+    }
+  }, [isModalOpen])
 
-    console.log('args', args)
-    setIsModalOpen(false)
-  }, [])
+  const onClickParse = useCallback(
+    (command: string) => {
+      const { operatorsIds, operatorsKeys, ssvTokenAmount } = parseCommandArgs(command)
+
+      if (operatorsIds.length) {
+        actions.setOperators((currentOperators) => {
+          const operators = currentOperators.map((operator) => Object.assign({}, operator))
+
+          operatorsIds.forEach((id, index) => {
+            operators[index].id = id
+          })
+
+          return operators
+        })
+      }
+
+      if (operatorsKeys.length) {
+        actions.setOperators((currentOperators) => {
+          const operators = currentOperators.map((operator) => Object.assign({}, operator))
+
+          operatorsKeys.forEach((publicKey, index) => {
+            operators[index].publicKey = publicKey
+          })
+
+          return operators
+        })
+      }
+
+      if (ssvTokenAmount.length) {
+        actions.setSsvAmount(ssvTokenAmount)
+      }
+
+      setValue('')
+      setIsModalOpen(false)
+    },
+    [actions]
+  )
 
   return (
     <>
@@ -39,8 +79,10 @@ export function ParseCommand() {
         onCancel={() => setIsModalOpen(false)}
       >
         <Input.TextArea
+          ref={ref}
           className={styles.Value}
           placeholder="Paste here your predefined command for Key Distributor CLI"
+          value={value}
           onChange={({ target }) => setValue(target.value)}
           showCount
         />

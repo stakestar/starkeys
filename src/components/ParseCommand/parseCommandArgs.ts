@@ -1,6 +1,6 @@
 type ParsedCommandArgs = {
   operatorsKeys: string[]
-  operatorsIds: number[]
+  operatorsIds: string[]
   ssvTokenAmount: string
 }
 
@@ -12,6 +12,7 @@ const argumentsNames = {
 
 export function parseCommandArgs(cliArgs: string): ParsedCommandArgs {
   const args = cliArgs.split(' ')
+  const { operatorsKeys, operatorsIds, ssvTokenAmount } = argumentsNames
 
   const parsedCommandArgs: ParsedCommandArgs = {
     operatorsKeys: [],
@@ -19,31 +20,27 @@ export function parseCommandArgs(cliArgs: string): ParsedCommandArgs {
     ssvTokenAmount: ''
   }
 
-  for (let i = 0; i < args.length; i++) {
-    const arg = args[i].trim()
+  args.forEach((item) => {
+    const arg = item.trim()
 
-    if (arg.length === 0) {
-      continue
-    }
-
-    if (arg.indexOf(argumentsNames.operatorsKeys) == 0) {
+    if (arg.includes(operatorsKeys)) {
       parsedCommandArgs.operatorsKeys = arg
-        .substring(argumentsNames.operatorsKeys.length)
+        .substring(operatorsKeys.length)
         .split(',')
         .map((el) => el.trim())
     }
 
-    if (arg.indexOf(argumentsNames.operatorsIds) == 0) {
+    if (arg.includes(operatorsIds)) {
       parsedCommandArgs.operatorsIds = arg
-        .substring(argumentsNames.operatorsIds.length)
+        .substring(operatorsIds.length)
         .split(',')
-        .map((el) => Number(el))
+        .map((el) => el.trim())
     }
 
-    if (arg.indexOf(argumentsNames.ssvTokenAmount) == 0) {
-      parsedCommandArgs.ssvTokenAmount = arg.substring(argumentsNames.ssvTokenAmount.length)
+    if (arg.includes(ssvTokenAmount)) {
+      parsedCommandArgs.ssvTokenAmount = arg.substring(ssvTokenAmount.length)
     }
-  }
+  })
 
   return parsedCommandArgs
 }

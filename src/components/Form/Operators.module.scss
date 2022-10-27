@@ -1,0 +1,23 @@
+.Header {
+  display: flex;
+  margin-top: -0.5rem;
+}
+
+.Column1 {
+  width: 20% !important;
+}
+
+.Column2 {
+  width: 80% !important;
+}
+
+.Group {
+  position: relative;
+  margin-bottom: 0.25rem;
+
+  .Number {
+    position: absolute;
+    top: 10px;
+    left: -1rem;
+  }
+}

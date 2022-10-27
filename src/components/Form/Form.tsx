@@ -1,18 +1,16 @@
 import { DownloadOutlined } from '@ant-design/icons'
 import { Form as AndtForm, Button, Card, Input, InputNumber, Typography } from 'antd'
-import { useState } from 'react'
 
+import { useAppState } from '../../hooks'
 import styles from './Form.module.scss'
 import { KeystoreFile } from './KeystoreFile'
+import { Operators } from './Operators'
 
 const { Item } = AndtForm
 const { Title } = Typography
 
 export function Form() {
-  const [password, setPassword] = useState<string>()
-  const [operators, setOperators] = useState([])
-  const [ssv, setSsv] = useState<string>()
-  console.log('operators', operators)
+  const { actions, operators, ssvAmount } = useAppState()
 
   const onFinish = (values: any) => {
     console.log('Success:', values)
@@ -20,6 +18,7 @@ export function Form() {
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
+    console.log('operators', operators)
   }
 
   return (
@@ -50,7 +49,7 @@ export function Form() {
         </Item>
         <Item>
           <Title level={3}>Operators</Title>
-          TODO
+          <Operators />
         </Item>
         <Item name="ssv" rules={[{ required: true, message: 'Please input your SSV amount' }]}>
           <Title level={3}>SSV to deposit</Title>
@@ -58,8 +57,8 @@ export function Form() {
             className={styles.InputNumber}
             placeholder="Input SSV amount"
             addonAfter="SSV"
-            // onChange={(value) => setSsv(value)}
-            // value={ssv}
+            onChange={(value) => actions.setSsvAmount(value)}
+            value={ssvAmount}
             type="number"
           />
         </Item>
