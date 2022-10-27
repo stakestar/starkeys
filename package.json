@@ -111,6 +111,8 @@
     "bignumber.js": "^9.1.0",
     "electron": "21.2.0",
     "electron-squirrel-startup": "^1.0.0",
+    "js-base64": "^3.7.2",
+    "jsencrypt": "^3.3.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ssv-keys": "https://github.com/bloxapp/ssv-keys.git"
