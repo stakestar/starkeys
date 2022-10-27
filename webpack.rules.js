@@ -14,7 +14,10 @@ module.exports = [
       options: {
         outputAssetBase: 'native_modules'
       }
-    }
+    },
+    resolve: {
+      fullySpecified: false,
+    },
   },
   {
     test: /\.tsx?$/,
