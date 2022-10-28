@@ -1,13 +1,15 @@
-import { InboxOutlined } from '@ant-design/icons'
+import { CloseOutlined } from '@ant-design/icons'
 import { Upload } from 'antd'
 import { RcFile } from 'antd/es/upload'
-import { useCallback, useState } from 'react'
+import classNames from 'classnames'
+import { MouseEvent, useCallback } from 'react'
 
 import { useAppState } from '../../hooks'
 import { validateKeystorePassword } from '../../lib'
+import styles from './KeystoreFile.module.scss'
 
 export function KeystoreFile() {
-  const { actions } = useAppState()
+  const { actions, keystoreFile } = useAppState()
 
   const onBeforeUpload = useCallback(
     (file: RcFile) => {
@@ -28,13 +30,29 @@ export function KeystoreFile() {
     [actions]
   )
 
+  const onClickCancel = (event: MouseEvent<HTMLSpanElement>) => {
+    event.stopPropagation()
+    actions.setKeystoreFile(null)
+  }
+
   return (
-    <Upload.Dragger beforeUpload={onBeforeUpload} accept=".json">
-      <p className="ant-upload-drag-icon">
-        <InboxOutlined />
-      </p>
-      <p className="ant-upload-text">Click or drag here your Keystore file</p>
-      <p className="ant-upload-hint">*.json</p>
+    <Upload.Dragger
+      className={styles.KeystoreFile}
+      beforeUpload={onBeforeUpload}
+      accept=".json"
+      showUploadList={false}
+    >
+      <div className={classNames(styles.EmptyState, { [styles.invisible]: keystoreFile })}>
+        <p className="ant-upload-text">Click or drag here your Keystore file</p>
+        <p className="ant-upload-hint">*.json</p>
+      </div>
+      <div
+        className={classNames(styles.Cancel, { [styles.visible]: keystoreFile })}
+        onClick={onClickCancel}
+      >
+        {keystoreFile?.name}
+        <CloseOutlined className={styles.CancelIcon} />
+      </div>
     </Upload.Dragger>
   )
 }

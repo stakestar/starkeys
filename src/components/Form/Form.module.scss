@@ -1,21 +1,21 @@
 .Form {
   display: flex;
   flex-direction: column;
-  width: 30rem;
 
   .Card {
     display: flex;
     flex-direction: column;
-    padding: 1rem 2rem 1.5rem;
-  }
+    width: 30rem;
+    padding: 1.5rem 2rem 0.5rem;
 
-  .InputNumber {
-    display: flex;
+    .InputNumber {
+      display: flex;
+    }
   }
 
   .Submit {
-    height: 5rem;
-    margin: 2rem auto;
+    height: 3rem;
+    margin: 2rem 2rem 0;
     padding-inline: 2rem;
     border-radius: 3rem;
     font-size: 1.25rem;

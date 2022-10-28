@@ -12,35 +12,22 @@ const { Title } = Typography
 export function Form() {
   const { actions, keystoreFile, keystorePassword, operators, ssvAmount } = useAppState()
 
-  const onFinish = (values: any) => {
-    console.log('Success:', values)
-  }
-
-  const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo)
+  const onSubit = () => {
     console.log('form data', { keystoreFile, keystorePassword, operators, ssvAmount })
   }
 
   return (
-    <AndtForm
-      className={styles.Form}
-      name="basic"
-      size="large"
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}
-      initialValues={{ remember: true }}
-      autoComplete="off"
-    >
+    <div className={styles.Form}>
       <Card className={styles.Card} bodyStyle={{ padding: 0 }}>
         <Item>
-          <Title level={3}>Keystore file</Title>
+          <Title level={4}>Keystore file</Title>
           <KeystoreFile />
         </Item>
         <Item
           name="password"
           rules={[{ required: true, message: 'Please input Keystore password' }]}
         >
-          <Title level={3}>Keystore password</Title>
+          <Title level={4}>Keystore password</Title>
           <Input.Password
             placeholder="Input password"
             value={keystorePassword}
@@ -48,11 +35,11 @@ export function Form() {
           />
         </Item>
         <Item>
-          <Title level={3}>Operators</Title>
+          <Title level={4}>Operators</Title>
           <Operators />
         </Item>
         <Item name="ssv" rules={[{ required: true, message: 'Please input your SSV amount' }]}>
-          <Title level={3}>SSV to deposit</Title>
+          <Title level={4}>SSV to deposit</Title>
           <InputNumber
             className={styles.InputNumber}
             placeholder="Input SSV amount"
@@ -65,15 +52,15 @@ export function Form() {
       </Card>
       <Button
         className={styles.Submit}
+        onClick={onSubit}
         icon={<DownloadOutlined />}
         size="large"
         type="primary"
         shape="round"
         loading={false}
-        htmlType="submit"
       >
         Generate KeyShare file
       </Button>
-    </AndtForm>
+    </div>
   )
 }

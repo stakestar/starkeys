@@ -15,9 +15,13 @@
   position: relative;
   margin-bottom: 0.25rem;
 
+  &:last-child {
+    margin-bottom: 0;
+  }
+
   .Number {
     position: absolute;
-    top: 10px;
+    top: 5px;
     left: -1rem;
   }
 }

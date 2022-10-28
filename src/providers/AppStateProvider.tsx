@@ -38,7 +38,7 @@ export function AppStateProvider({
   requiredOperatorsCount,
   children
 }: AppStateProvider): JSX.Element {
-  const [keystoreFile, setKeystoreFile] = useState<RcFile>()
+  const [keystoreFile, setKeystoreFile] = useState<RcFile>(null)
   const [keystorePassword, setKeystorePassword] = useState('')
   const [ssvAmount, setSsvAmount] = useState('')
   const [operators, setOperators] = useState<Operator[]>(
