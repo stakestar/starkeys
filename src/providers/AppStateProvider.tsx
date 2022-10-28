@@ -52,7 +52,7 @@ export function AppStateProvider({
 
   return (
     <AppStateProviderContext.Provider
-      value={{ keystoreFile, keystorePassword, operators, ssvAmount, actions }}
+      value={{ actions, keystoreFile, keystorePassword, operators, ssvAmount }}
     >
       {children}
     </AppStateProviderContext.Provider>
