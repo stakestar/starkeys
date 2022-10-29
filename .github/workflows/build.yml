@@ -11,6 +11,8 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: yarn install
+    - name: yarn add crypto-browserify -D
+      run: yarn add crypto-browserify -D
     - name: build
       run: yarn make
 
@@ -23,6 +25,8 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: yarn install
+    - name: yarn add crypto-browserify -D
+      run: yarn add crypto-browserify -D
     - name: build
       run: yarn make
 
@@ -35,5 +39,7 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: yarn install
+    - name: yarn add crypto-browserify -D
+      run: yarn add crypto-browserify -D
     - name: build
       run: yarn make
