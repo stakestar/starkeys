@@ -3,13 +3,33 @@
   flex-direction: column;
 
   .Card {
+    position: relative;
     display: flex;
     flex-direction: column;
     width: 30rem;
     padding: 1.5rem 2rem 0.5rem;
 
-    .InputNumber {
-      display: flex;
+    .Row {
+      margin-bottom: 1.5rem;
+
+      .InputNumber {
+        display: flex;
+      }
+    }
+  }
+
+  .Error {
+    position: absolute;
+    right: 0;
+    bottom: -27px;
+    left: 0;
+    text-align: center;
+    color: #ff4d4f;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+
+    &.active {
+      opacity: 1;
     }
   }
 

@@ -1,58 +1,103 @@
 import { DownloadOutlined } from '@ant-design/icons'
-import { Form as AndtForm, Button, Card, Input, InputNumber, Typography } from 'antd'
+import { Button, Card, Input, InputNumber, Typography } from 'antd'
+import classNames from 'classnames'
+import { useState } from 'react'
 
 import { useAppState } from '../../hooks'
 import styles from './Form.module.scss'
 import { KeystoreFile } from './KeystoreFile'
 import { Operators } from './Operators'
 
-const { Item } = AndtForm
 const { Title } = Typography
 
 export function Form() {
-  const { actions, keystoreFile, keystorePassword, operators, ssvAmount } = useAppState()
+  const {
+    actions: {
+      setKeystorePassword,
+      setSsvAmount,
+      setKeystoreFileError,
+      setKeystorePasswordError,
+      setOperatorsError,
+      setSsvAmountError
+    },
+    values: { keystoreFile, keystorePassword, operators, ssvAmount },
+    errors
+  } = useAppState()
 
-  const onSubit = () => {
-    console.log('form data', { keystoreFile, keystorePassword, operators, ssvAmount })
+  const [isError, setIsError] = useState(false)
+
+  const onSubmit = () => {
+    let isValid = true
+
+    setIsError(false)
+
+    if (!keystoreFile) {
+      setKeystoreFileError(true)
+      isValid = false
+    }
+
+    if (!keystorePassword) {
+      setKeystorePasswordError(true)
+      isValid = false
+    }
+
+    if (operators.some(({ id, publicKey }) => !id || !publicKey)) {
+      setOperatorsError(operators.map(({ id, publicKey }) => ({ id: !id, publicKey: !publicKey })))
+      isValid = false
+    }
+
+    if (!ssvAmount) {
+      setSsvAmountError(true)
+      isValid = false
+    }
+
+    if (isValid) {
+      // We can generate KeyShare file
+    } else {
+      setIsError(true)
+    }
   }
 
   return (
     <div className={styles.Form}>
       <Card className={styles.Card} bodyStyle={{ padding: 0 }}>
-        <Item>
+        <div className={styles.Row}>
           <Title level={4}>Keystore file</Title>
           <KeystoreFile />
-        </Item>
-        <Item
-          name="password"
-          rules={[{ required: true, message: 'Please input Keystore password' }]}
-        >
+        </div>
+        <div className={styles.Row}>
           <Title level={4}>Keystore password</Title>
           <Input.Password
             placeholder="Input password"
             value={keystorePassword}
-            onChange={({ target }) => actions.setKeystorePassword(target.value)}
+            onChange={({ target }) => setKeystorePassword(target.value)}
+            status={!keystorePassword && errors.keystorePassword ? 'error' : null}
           />
-        </Item>
-        <Item>
+        </div>
+        <div className={styles.Row}>
           <Title level={4}>Operators</Title>
           <Operators />
-        </Item>
-        <Item name="ssv" rules={[{ required: true, message: 'Please input your SSV amount' }]}>
+        </div>
+        <div className={styles.Row}>
           <Title level={4}>SSV to deposit</Title>
           <InputNumber
             className={styles.InputNumber}
             placeholder="Input SSV amount"
             addonAfter="SSV"
-            onChange={(value) => actions.setSsvAmount(value)}
+            onChange={(value) => setSsvAmount(value)}
             value={ssvAmount}
+            status={!ssvAmount && errors.ssvAmount ? 'error' : null}
             type="number"
+            min="0"
           />
-        </Item>
+        </div>
+        <div className={classNames(styles.Error, { [styles.active]: isError })}>
+          Please fill the fields above and try again
+        </div>
       </Card>
       <Button
         className={styles.Submit}
-        onClick={onSubit}
+        onClick={onSubmit}
         icon={<DownloadOutlined />}
         size="large"
         type="primary"

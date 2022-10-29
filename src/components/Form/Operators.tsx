@@ -5,7 +5,11 @@ import { useAppState } from '../../hooks'
 import styles from './Operators.module.scss'
 
 export function Operators() {
-  const { operators, actions } = useAppState()
+  const {
+    actions,
+    values: { operators },
+    errors
+  } = useAppState()
 
   const onChange = useCallback(
     ({ index, column, value }: { index: number; column: 'id' | 'publicKey'; value: string }) => {
@@ -14,7 +18,7 @@ export function Operators() {
           if (currentIndex === index) {
             return {
               ...currentOperator,
-              [column]: value
+              [column]: value.trim()
             }
           }
 
@@ -39,12 +43,14 @@ export function Operators() {
             className={styles.Column1}
             value={operator.id}
             onChange={({ target }) => onChange({ index, column: 'id', value: target.value })}
+            status={!operator.id && errors.operators[index].id ? 'error' : null}
           />
           <Input
             placeholder="Input public key"
             className={styles.Column2}
             value={operator.publicKey}
             onChange={({ target }) => onChange({ index, column: 'publicKey', value: target.value })}
+            status={!operator.publicKey && errors.operators[index].publicKey ? 'error' : null}
           />
         </Input.Group>
       ))}

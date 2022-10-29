@@ -2,26 +2,40 @@ import { CloseOutlined } from '@ant-design/icons'
 import { Upload } from 'antd'
 import { RcFile } from 'antd/es/upload'
 import classNames from 'classnames'
-import { MouseEvent, useCallback } from 'react'
+import { MouseEvent, useCallback, useState } from 'react'
 
 import { useAppState } from '../../hooks'
 import { validateKeystorePassword } from '../../lib'
 import styles from './KeystoreFile.module.scss'
 
 export function KeystoreFile() {
-  const { actions, keystoreFile } = useAppState()
+  const {
+    actions,
+    values: { keystoreFile },
+    errors
+  } = useAppState()
+
+  const [isError, setIsError] = useState(false)
 
   const onBeforeUpload = useCallback(
     (file: RcFile) => {
+      setIsError(false)
+
       const reader = new FileReader()
 
       reader.readAsText(file)
       reader.onload = ({ target }) => {
-        validateKeystorePassword(target.result.toString(), 'qweqweqwe').then(console.log)
+        validateKeystorePassword(target.result.toString(), 'qweqweqwe')
+          .then((data) => {
+            console.log(data) // TODO ?
+            actions.setKeystoreFileError(false)
+          })
+          .catch((error) => {
+            console.error(error)
+            setIsError(true)
+          })
       }
-      reader.onerror = (e) => {
-        console.log(e)
-      }
+      reader.onerror = console.error
 
       actions.setKeystoreFile(file)
 
@@ -37,13 +51,15 @@ export function KeystoreFile() {
 
   return (
     <Upload.Dragger
-      className={styles.KeystoreFile}
+      className={classNames(styles.KeystoreFile, {
+        [styles.error]: !keystoreFile && (isError || errors.keystoreFile)
+      })}
       beforeUpload={onBeforeUpload}
       accept=".json"
       showUploadList={false}
     >
       <div className={classNames(styles.EmptyState, { [styles.invisible]: keystoreFile })}>
-        <p className="ant-upload-text">Click or drag here your Keystore file</p>
+        <p>Click or drag here your Keystore file</p>
         <p className="ant-upload-hint">*.json</p>
       </div>
       <div
@@ -52,6 +68,9 @@ export function KeystoreFile() {
       >
         {keystoreFile?.name}
         <CloseOutlined className={styles.CancelIcon} />
+      </div>
+      <div className={classNames(styles.Error, { [styles.active]: isError })}>
+        Invalid Keystore file
       </div>
     </Upload.Dragger>
   )
