@@ -35,7 +35,10 @@ export function KeystoreFile() {
             setIsError(true)
           })
       }
-      reader.onerror = console.error
+      reader.onerror = (error) => {
+        console.error(error)
+        setIsError(true)
+      }
 
       actions.setKeystoreFile(file)
 
