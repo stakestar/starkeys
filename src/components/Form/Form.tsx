@@ -2,11 +2,14 @@ import { DownloadOutlined } from '@ant-design/icons'
 import { Button, Card, Input, InputNumber, Typography } from 'antd'
 import classNames from 'classnames'
 import { useState } from 'react'
+import { validateKeystorePassword } from '../../lib'
 
 import { useAppState } from '../../hooks'
 import styles from './Form.module.scss'
 import { KeystoreFile } from './KeystoreFile'
 import { Operators } from './Operators'
+import { readFileContent, saveFilePicker } from '../../lib/utils'
+import { generateKeyShares } from '../../lib/ssv/keyshare'
 
 const { Title } = Typography
 
@@ -25,8 +28,11 @@ export function Form() {
   } = useAppState()
 
   const [isError, setIsError] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
+    setIsLoading(true)
+
     let isValid = true
 
     setIsError(false)
@@ -56,6 +62,37 @@ export function Form() {
     } else {
       setIsError(true)
     }
+
+    const keyshare = await generateFile()
+
+    setIsLoading(false)
+
+    // generate name
+    await saveFilePicker('keyshare.json', keyshare)
+  }
+
+  const generateFile = async (): Promise<string> => {
+    const fileContent = await readFileContent(keystoreFile)
+    const privateKey = await validateKeystorePassword(fileContent, keystorePassword)
+
+    // Did not able to get private key from keystore
+    if (privateKey === false) {
+      return
+    }
+
+    const operatorsIds: Array<number> = []
+    const operatorsKeys: Array<string> = []
+    operators.forEach(({id, publicKey}) => {
+      operatorsIds.push(Number(id))
+      operatorsKeys.push(publicKey)
+    })
+
+    return await generateKeyShares(
+      String(privateKey),
+      operatorsIds,
+      operatorsKeys,
+      ssvAmount
+    )
   }
 
   return (
@@ -102,7 +139,7 @@ export function Form() {
         size="large"
         type="primary"
         shape="round"
-        loading={false}
+        loading={isLoading}
       >
         Generate KeyShare file
       </Button>

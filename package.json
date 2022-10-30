@@ -87,6 +87,7 @@
     "@electron-forge/publisher-github": "^6.0.0-beta.70",
     "@types/react": "^18.0.21",
     "@types/react-dom": "^18.0.6",
+    "@types/wicg-file-system-access": "^2020.9.5",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",

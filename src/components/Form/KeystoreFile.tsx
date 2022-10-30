@@ -21,25 +21,6 @@ export function KeystoreFile() {
     (file: RcFile) => {
       setIsError(false)
 
-      const reader = new FileReader()
-
-      reader.readAsText(file)
-      reader.onload = ({ target }) => {
-        validateKeystorePassword(target.result.toString(), 'qweqweqwe')
-          .then((data) => {
-            console.log(data) // TODO ?
-            actions.setKeystoreFileError(false)
-          })
-          .catch((error) => {
-            console.error(error)
-            setIsError(true)
-          })
-      }
-      reader.onerror = (error) => {
-        console.error(error)
-        setIsError(true)
-      }
-
       actions.setKeystoreFile(file)
 
       return false
