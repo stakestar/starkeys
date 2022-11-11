@@ -1,6 +1,10 @@
-.KeystoreFileStep {
+.OperatorsStep {
     .Row {
         margin-bottom: 1.5rem;
+
+        .InputNumber {
+            display: flex;
+        }
     }
 
     .Next {

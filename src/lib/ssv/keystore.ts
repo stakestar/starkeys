@@ -3,7 +3,7 @@ import { EthereumKeyStore } from 'ssv-keys'
 export const validateKeystorePassword = async (
   keyStoreData: string,
   password: string
-): Promise<string|boolean> => {
+): Promise<string|null> => {
   const keyStore = new EthereumKeyStore(keyStoreData)
 
   return keyStore
@@ -11,5 +11,5 @@ export const validateKeystorePassword = async (
     .then((privateKey) => {
       return privateKey
     })
-    .catch(() => false)
+    .catch(() => null)
 }

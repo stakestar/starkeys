@@ -3,8 +3,8 @@ import { Operator } from '../../providers'
 export const operatorPublicKeyValidator = (operators: Operator[]): Error|null => {
   const error = new Error('Operators should be unique')
 
-  let operatorsIds:  Map<String, Number>
-  let operatorsPublicKeys:  Map<String, Number>
+  let operatorsIds:  Map<string, number>
+  let operatorsPublicKeys:  Map<string, number>
 
   for (let i = 0; i < operators.length; i++) {
     if (operatorsIds.has(operators[i].id)) {

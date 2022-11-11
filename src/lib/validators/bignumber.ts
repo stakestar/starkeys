@@ -7,6 +7,10 @@ const maxUint256 = new BigNumber(
 export const uint256Validator = (value: string): Error|null => {
   const error = new Error('Invalid amount')
 
+  if (value.trim() === '') {
+    return null
+  }
+
   try {
     const amount = new BigNumber(value)
 

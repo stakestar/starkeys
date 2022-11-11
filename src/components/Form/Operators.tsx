@@ -3,6 +3,8 @@ import { useCallback } from 'react'
 
 import { useAppState } from '../../hooks'
 import styles from './Operators.module.scss'
+import Link from 'antd/lib/typography/Link'
+import { getOperatorUrl } from '../../lib/ssv'
 
 export function Operators() {
   const {
@@ -37,20 +39,29 @@ export function Operators() {
       </div>
       {operators.map((operator, index) => (
         <Input.Group className={styles.Group} key={index} compact>
-          <div className={styles.Number}>{index + 1}.</div>
+          <div className={styles.Number}>
+            { operator.id
+              ?
+              <Link href={getOperatorUrl(operator.id)} target="_blank">
+                {index + 1}.
+              </Link>
+              : <span>{index + 1}.</span>
+            }
+          </div>
+          <div ></div>
           <Input
             placeholder="Input id"
             className={styles.Column1}
             value={operator.id}
             onChange={({ target }) => onChange({ index, column: 'id', value: target.value })}
-            status={!operator.id && errors.operators[index].id ? 'error' : null}
+            status={errors.operators[index].id ? 'error' : null}
           />
           <Input
             placeholder="Input public key"
             className={styles.Column2}
             value={operator.publicKey}
             onChange={({ target }) => onChange({ index, column: 'publicKey', value: target.value })}
-            status={!operator.publicKey && errors.operators[index].publicKey ? 'error' : null}
+            status={errors.operators[index].publicKey ? 'error' : null}
           />
         </Input.Group>
       ))}

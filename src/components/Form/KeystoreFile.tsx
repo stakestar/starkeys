@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { MouseEvent, useCallback, useState } from 'react'
 
 import { useAppState } from '../../hooks'
-import { validateKeystorePassword } from '../../lib'
 import styles from './KeystoreFile.module.scss'
 
 export function KeystoreFile() {

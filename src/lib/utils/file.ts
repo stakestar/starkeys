@@ -13,13 +13,10 @@ export const readFileContent = async (file: File): Promise<string> => {
     })
 }
 
-export const saveFilePicker = async (name: string, content: string) => {
-    const handle = await window.showSaveFilePicker({
-        suggestedName: name,
-    });
-
-    const writable = await handle.createWritable()
-
-    await writable.write(content);
-    await writable.close();
+export const saveFilePicker = async (name: string, content: string) => {  
+    const bb = new Blob([content ], { type: 'text/plain' })
+    const a = document.createElement('a');
+    a.download = name
+    a.href = window.URL.createObjectURL(bb)
+    a.click()
 }

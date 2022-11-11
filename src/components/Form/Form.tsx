@@ -76,7 +76,7 @@ export function Form() {
     const privateKey = await validateKeystorePassword(fileContent, keystorePassword)
 
     // Did not able to get private key from keystore
-    if (privateKey === false) {
+    if (!privateKey) {
       return
     }
 

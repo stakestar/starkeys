@@ -13,7 +13,7 @@ export type Operator = {
   publicKey: string
 }
 
-type OperatorError = {
+export type OperatorError = {
   id: boolean
   publicKey: boolean
 }
@@ -22,6 +22,7 @@ export type AppStateProviderValue = {
   values: {
     keystoreFile: RcFile
     keystorePassword: string
+    privateKey: string
     operators: Operator[]
     ssvAmount: string,
     currentStep: number
@@ -29,6 +30,7 @@ export type AppStateProviderValue = {
   actions: {
     setKeystoreFile: Dispatch<SetStateAction<RcFile>>
     setKeystorePassword: Dispatch<SetStateAction<string>>
+    setPrivateKey: Dispatch<SetStateAction<string>>
     setOperators: Dispatch<SetStateAction<Operator[]>>
     setSsvAmount: Dispatch<SetStateAction<string>>
     setKeystoreFileError: Dispatch<SetStateAction<boolean>>
@@ -36,6 +38,7 @@ export type AppStateProviderValue = {
     setOperatorsError: Dispatch<SetStateAction<OperatorError[]>>
     setSsvAmountError: Dispatch<SetStateAction<string|null>>,
     setCurrentStep: Dispatch<SetStateAction<number>>
+    reset: Dispatch<void>
   }
   errors: {
     keystoreFile: boolean
@@ -59,6 +62,7 @@ export function AppStateProvider({
 }: AppStateProvider): JSX.Element {
   const [keystoreFile, setKeystoreFile] = useState<RcFile>(null)
   const [keystorePassword, setKeystorePassword] = useState('')
+  const [privateKey, setPrivateKey] = useState('')
   const [ssvAmount, setSsvAmount] = useState('')
   const [operators, setOperators] = useState<Operator[]>(
     Array.from({ length: requiredOperatorsCount }, () => ({ id: '', publicKey: '' }))
@@ -73,22 +77,37 @@ export function AppStateProvider({
 
   const [currentStep, setCurrentStep] = useState(0)
 
+  const reset = () => {
+    setKeystoreFile(null)
+    setKeystorePassword('')
+    setPrivateKey('')
+    setSsvAmount('')
+    setOperators([])
+
+    setKeystoreFileError(false)
+    setKeystorePasswordError(false)
+    setSsvAmountError(false)
+    setOperatorsError([])
+  }
+
   const actions = useMemo(
     () => ({
       setKeystoreFile,
       setKeystorePassword,
+      setPrivateKey,
       setOperators,
       setSsvAmount,
       setKeystoreFileError,
       setKeystorePasswordError,
       setSsvAmountError,
       setOperatorsError,
-      setCurrentStep
+      setCurrentStep,
+      reset
     }),
     []
   )
 
-  const values = { keystoreFile, keystorePassword, operators, ssvAmount, currentStep }
+  const values = { keystoreFile, keystorePassword, operators, ssvAmount, privateKey, currentStep }
 
   const errors = useMemo(
     () => ({
