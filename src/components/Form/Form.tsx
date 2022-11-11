@@ -58,17 +58,15 @@ export function Form() {
     }
 
     if (isValid) {
-      // We can generate KeyShare file
+      const keyshare = await generateFile()
+      // generate name
+      await saveFilePicker('keyshare.json', keyshare)
     } else {
       setIsError(true)
     }
 
-    const keyshare = await generateFile()
 
     setIsLoading(false)
-
-    // generate name
-    await saveFilePicker('keyshare.json', keyshare)
   }
 
   const generateFile = async (): Promise<string> => {
@@ -123,7 +121,7 @@ export function Form() {
             addonAfter="SSV"
             onChange={(value) => setSsvAmount(value)}
             value={ssvAmount}
-            status={!ssvAmount && errors.ssvAmount ? 'error' : null}
+            status={errors.ssvAmount ? 'error' : null}
             type="number"
             min="0"
           />
