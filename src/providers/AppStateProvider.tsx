@@ -8,7 +8,7 @@ import {
   useState
 } from 'react'
 
-type Operator = {
+export type Operator = {
   id: string
   publicKey: string
 }
@@ -23,7 +23,8 @@ export type AppStateProviderValue = {
     keystoreFile: RcFile
     keystorePassword: string
     operators: Operator[]
-    ssvAmount: string
+    ssvAmount: string,
+    currentStep: number
   }
   actions: {
     setKeystoreFile: Dispatch<SetStateAction<RcFile>>
@@ -33,13 +34,14 @@ export type AppStateProviderValue = {
     setKeystoreFileError: Dispatch<SetStateAction<boolean>>
     setKeystorePasswordError: Dispatch<SetStateAction<boolean>>
     setOperatorsError: Dispatch<SetStateAction<OperatorError[]>>
-    setSsvAmountError: Dispatch<SetStateAction<boolean>>
+    setSsvAmountError: Dispatch<SetStateAction<string|null>>,
+    setCurrentStep: Dispatch<SetStateAction<number>>
   }
   errors: {
     keystoreFile: boolean
     keystorePassword: boolean
     operators: OperatorError[]
-    ssvAmount: boolean
+    ssvAmount: string|null
   }
 }
 
@@ -64,10 +66,12 @@ export function AppStateProvider({
 
   const [keystoreFileError, setKeystoreFileError] = useState(false)
   const [keystorePasswordError, setKeystorePasswordError] = useState(false)
-  const [ssvAmountError, setSsvAmountError] = useState(false)
+  const [ssvAmountError, setSsvAmountError] = useState(null)
   const [operatorsError, setOperatorsError] = useState<OperatorError[]>(
     Array.from({ length: requiredOperatorsCount }, () => ({ id: false, publicKey: false }))
   )
+
+  const [currentStep, setCurrentStep] = useState(0)
 
   const actions = useMemo(
     () => ({
@@ -78,12 +82,13 @@ export function AppStateProvider({
       setKeystoreFileError,
       setKeystorePasswordError,
       setSsvAmountError,
-      setOperatorsError
+      setOperatorsError,
+      setCurrentStep
     }),
     []
   )
 
-  const values = { keystoreFile, keystorePassword, operators, ssvAmount }
+  const values = { keystoreFile, keystorePassword, operators, ssvAmount, currentStep }
 
   const errors = useMemo(
     () => ({

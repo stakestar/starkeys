@@ -10,6 +10,7 @@ import { KeystoreFile } from './KeystoreFile'
 import { Operators } from './Operators'
 import { readFileContent, saveFilePicker } from '../../lib/utils'
 import { generateKeyShares } from '../../lib/ssv/keyshare'
+import { uint256Validator } from '../../lib/validators'
 
 const { Title } = Typography
 
@@ -52,8 +53,9 @@ export function Form() {
       isValid = false
     }
 
-    if (!ssvAmount) {
-      setSsvAmountError(true)
+    const ssvAmountError = uint256Validator(ssvAmount)
+    if (ssvAmountError) {
+      setSsvAmountError(ssvAmountError.message)
       isValid = false
     }
 

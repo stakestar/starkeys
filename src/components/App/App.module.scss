@@ -29,4 +29,12 @@
     flex-direction: column;
     align-items: center;
   }
+
+  .Card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 40rem;
+    padding: 1.5rem 2rem 0.5rem;
+  }
 }
