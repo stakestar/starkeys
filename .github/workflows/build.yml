@@ -1,5 +1,9 @@
-name: WIP Build
-on: [push]
+name: Build
+
+on:
+  create:
+    tags:
+      - v*
 
 jobs:
   build_on_linux:
