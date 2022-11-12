@@ -3,11 +3,11 @@
   "productName": "ssv-key-distributor-app",
   "description": "SSV Key Distributer",
   "version": "0.1.0",
-  "author": "OneStar",
+  "author": "StakeStar",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onestaree/ui-kit.git"
+    "url": "git+https://github.com/onestaree/ssv-key-distributor-app.git"
   },
   "main": ".webpack/main",
   "scripts": {
@@ -28,10 +28,8 @@
           }
         },
         {
-          "name": "@electron-forge/maker-zip",
-          "platforms": [
-            "darwin"
-          ]
+          "name": "@electron-forge/maker-dmg",
+          "config": {}
         },
         {
           "name": "@electron-forge/maker-deb",
@@ -80,6 +78,7 @@
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.67",
     "@electron-forge/maker-deb": "^6.0.0-beta.67",
+    "@electron-forge/maker-dmg": "^6.0.1",
     "@electron-forge/maker-rpm": "^6.0.0-beta.67",
     "@electron-forge/maker-squirrel": "^6.0.0-beta.67",
     "@electron-forge/maker-zip": "^6.0.0-beta.67",
