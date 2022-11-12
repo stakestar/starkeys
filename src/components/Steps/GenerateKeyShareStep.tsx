@@ -1,6 +1,6 @@
 import { useAppState } from '../../hooks'
 import { DownloadOutlined } from '@ant-design/icons'
-import { Button, Typography } from 'antd'
+import { Button } from 'antd'
 
 import styles from './GenerateKeyShareStep.module.scss'
 import { saveFilePicker } from '../../lib/utils'

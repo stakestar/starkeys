@@ -17,15 +17,14 @@ const createWindow = (): void => {
     height: 1024,
     width: 1024,
     webPreferences: {
-      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY
+      preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
+      contextIsolation: false,
+      nodeIntegration: false
     }
   })
 
   // and load the index.html of the app.
   mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY)
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
 
   mainWindow.webContents.on("new-window", function(event, url) {
     event.preventDefault();
