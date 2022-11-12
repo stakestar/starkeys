@@ -31,6 +31,8 @@ const createWindow = (): void => {
     event.preventDefault();
     shell.openExternal(url);
   })
+
+  mainWindow.setMenuBarVisibility(false)
 }
 
 // This method will be called when Electron has finished
