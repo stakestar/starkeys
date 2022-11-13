@@ -1,9 +1,6 @@
 name: Build
 
-on:
-  create:
-    tags:
-      - v*
+on: [push]
 
 jobs:
   build_on_linux:
