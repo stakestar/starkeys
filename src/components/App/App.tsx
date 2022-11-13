@@ -1,4 +1,5 @@
-import { Layout, Typography, Steps, Card, Divider } from 'antd'
+import { Card, Divider, Layout, Steps, Typography } from 'antd'
+
 import { useAppState } from '../../hooks'
 import { GenerateKeyShareStep } from '../Steps/GenerateKeyShareStep'
 import { KeystoreFileStep } from '../Steps/KeystoreFileStep'
@@ -9,7 +10,9 @@ const { Header, Footer, Content } = Layout
 const { Title, Text, Link } = Typography
 
 export function App() {
-  const {values: {currentStep}} = useAppState()
+  const {
+    values: { currentStep }
+  } = useAppState()
 
   return (
     <Layout className={styles.App}>
@@ -25,31 +28,31 @@ export function App() {
             current={currentStep}
             items={[
               {
-                title: 'Read keystore',
-                description: '',
+                title: 'Read Keystore',
+                description: ''
               },
               {
-                title: 'Set Operators data',
+                title: 'Set operators data',
                 description: '',
-                subTitle: '',
+                subTitle: ''
               },
               {
                 title: 'Generate KeyShare',
-                description: '',
-              },
+                description: ''
+              }
             ]}
           />
-          <Divider/>
-          {currentStep == 0 && <KeystoreFileStep/>}
-          {currentStep == 1 && <OperatorsStep/>}
-          {currentStep == 2 && <GenerateKeyShareStep/>}
+          <Divider />
+          {currentStep == 0 && <KeystoreFileStep />}
+          {currentStep == 1 && <OperatorsStep />}
+          {currentStep == 2 && <GenerateKeyShareStep />}
         </Card>
       </Content>
       <Footer style={{ textAlign: 'center' }}>
         <Link href="https://ssv.network" target="_blank">
           https://ssv.network
-        </Link>
-        {' '}x{' '}
+        </Link>{' '}
+        x{' '}
         <Link href="https://stakestar.io" target="_blank">
           https://stakestar.io
         </Link>

@@ -59,9 +59,9 @@
         }
       ],
       "plugins": [
-        [
-          "@electron-forge/plugin-webpack",
-          {
+        {
+          "name": "@electron-forge/plugin-webpack",
+          "config": {
             "mainConfig": "./webpack.main.config.js",
             "renderer": {
               "config": "./webpack.renderer.config.js",
@@ -77,59 +77,56 @@
               ]
             }
           }
-        ]
+        }
       ]
     }
   },
   "devDependencies": {
-    "@electron-forge/cli": "^6.0.0-beta.67",
-    "@electron-forge/maker-deb": "^6.0.0-beta.67",
+    "@electron-forge/cli": "^6.0.1",
+    "@electron-forge/maker-deb": "^6.0.1",
     "@electron-forge/maker-dmg": "^6.0.1",
-    "@electron-forge/maker-rpm": "^6.0.0-beta.67",
-    "@electron-forge/maker-squirrel": "^6.0.0-beta.67",
-    "@electron-forge/maker-zip": "^6.0.0-beta.67",
-    "@electron-forge/plugin-webpack": "6.0.0-beta.67",
-    "@electron-forge/publisher-github": "^6.0.0-beta.70",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
+    "@electron-forge/maker-rpm": "^6.0.1",
+    "@electron-forge/maker-squirrel": "^6.0.1",
+    "@electron-forge/maker-zip": "^6.0.1",
+    "@electron-forge/plugin-webpack": "6.0.1",
+    "@electron-forge/publisher-github": "^6.0.1",
+    "@types/react": "^18.0.25",
+    "@types/react-dom": "^18.0.8",
     "@types/wicg-file-system-access": "^2020.9.5",
-    "@typescript-eslint/eslint-plugin": "^5.0.0",
-    "@typescript-eslint/parser": "^5.0.0",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
     "@vercel/webpack-asset-relocator-loader": "1.7.3",
     "assert": "^2.0.0",
     "browserify-fs": "^1.0.0",
     "buffer": "^6.0.3",
-    "crypto": "npm:crypto-browserify",
     "crypto-browserify": "^3.12.0",
-    "css-loader": "^6.0.0",
-    "electron": "21.2.0",
-    "eslint": "8.22.0",
-    "eslint-plugin-import": "^2.25.0",
+    "css-loader": "^6.7.2",
+    "electron": "21.2.3",
+    "eslint": "8.27.0",
+    "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
-    "fork-ts-checker-webpack-plugin": "^7.2.1",
+    "fork-ts-checker-webpack-plugin": "^7.2.13",
     "fs": "^0.0.1-security",
     "https-browserify": "^1.0.0",
     "js-base64": "^3.7.2",
-    "jsencrypt": "^3.3.0",
+    "jsencrypt": "^3.3.1",
     "node-loader": "^2.0.0",
     "os-browserify": "^0.3.0",
     "path-browserify": "^1.0.1",
     "prettier": "^2.7.1",
     "prettier-plugin-sorted": "^2.0.0",
     "process": "^0.11.10",
-    "sass": "^1.55.0",
-    "sass-loader": "10.1.1",
-    "stream": "npm:stream-browserify",
-    "stream-browserify": "^3.0.0",
+    "sass": "^1.56.1",
+    "sass-loader": "13.2.0",
     "stream-http": "^3.2.0",
-    "style-loader": "^3.0.0",
-    "ts-loader": "^9.2.2",
-    "typescript": "~4.5.4",
+    "style-loader": "^3.3.1",
+    "ts-loader": "^9.4.1",
+    "typescript": "~4.8.4",
     "url": "^0.11.0"
   },
   "dependencies": {
-    "antd": "^4.24.1",
+    "antd": "^4.24.2",
     "bignumber.js": "^9.1.0",
     "classnames": "^2.3.2",
     "electron-squirrel-startup": "^1.0.0",
