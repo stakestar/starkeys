@@ -19,8 +19,8 @@
   },
   "config": {
     "packagerConfig": {
-      "name": "ssv-key-distributor-app",
-      "executableName": "StarKeys"
+      "name": "StarKeys",
+      "executableName": "ssv-key-distributor-app"
     },
     "forge": {
       "makers": [
