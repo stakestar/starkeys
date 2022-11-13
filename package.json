@@ -22,15 +22,19 @@
       "name": "ssv-key-distributor-app"
     },
     "forge": {
+      "packagerConfig": {},
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "ssv_key_distributor"
+            "name": "ssv_key_distributor_app"
           }
         },
         {
           "name": "@electron-forge/maker-dmg",
+          "platforms": [
+            "darwin"
+          ],
           "config": {}
         },
         {
