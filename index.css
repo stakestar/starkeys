@@ -1,0 +1,10 @@
+#app {
+  display: flex;
+  flex-direction: column;
+  min-width: 800px;
+  min-height: 100vh;
+}
+
+.ant-btn-loading-icon .anticon svg {
+  animation: loadingCircle 0.35s infinite linear !important;
+}

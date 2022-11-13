@@ -11,6 +11,9 @@ Download the latest version on [release section](https://github.com/onestaree/ss
 - `yarn` - Install dependencies
 - `yarn start` - Run the app in dev mode
 
+On mac:
+`Option + Command + I` - Open DevTools panel
+
 
 ## License
 

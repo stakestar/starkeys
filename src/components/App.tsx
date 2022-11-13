@@ -1,10 +1,11 @@
-import { Card, Divider, Layout, Steps, Typography } from 'antd'
+import { Card, Layout, Typography } from 'antd'
 
-import { useAppState } from '../../hooks'
-import { GenerateKeyShareStep } from '../Steps/GenerateKeyShareStep'
-import { KeystoreFileStep } from '../Steps/KeystoreFileStep'
-import { OperatorsStep } from '../Steps/OperatorsStep'
+import { useAppState } from '../hooks'
 import styles from './App.module.scss'
+import { GenerateKeyShareStep } from './GenerateKeyShareStep'
+import { KeystoreFileStep } from './KeystoreFileStep'
+import { OperatorsStep } from './OperatorsStep'
+import { Steps } from './Steps'
 
 const { Header, Footer, Content } = Layout
 const { Title, Text, Link } = Typography
@@ -23,26 +24,8 @@ export function App() {
         </Text>
       </Header>
       <Content className={styles.Content}>
+        <Steps />
         <Card className={styles.Card} bodyStyle={{ padding: 0 }}>
-          <Steps
-            current={currentStep}
-            items={[
-              {
-                title: 'Read Keystore',
-                description: ''
-              },
-              {
-                title: 'Set operators data',
-                description: '',
-                subTitle: ''
-              },
-              {
-                title: 'Generate KeyShare',
-                description: ''
-              }
-            ]}
-          />
-          <Divider />
           {currentStep == 0 && <KeystoreFileStep />}
           {currentStep == 1 && <OperatorsStep />}
           {currentStep == 2 && <GenerateKeyShareStep />}

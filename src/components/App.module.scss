@@ -6,7 +6,6 @@
     flex-direction: column;
     align-items: center;
     height: auto;
-    margin-bottom: 2rem;
     background: transparent;
     cursor: auto;
     user-select: none;
@@ -19,7 +18,8 @@
     }
 
     .Description {
-      margin: -1rem 0 0.25rem;
+      margin-top: 0.5rem;
+      line-height: 1rem;
     }
   }
 
@@ -35,6 +35,6 @@
     display: flex;
     flex-direction: column;
     width: 40rem;
-    padding: 1.5rem 2rem 0.5rem;
+    padding: 1.5rem 2rem;
   }
 }

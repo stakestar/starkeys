@@ -1,6 +1,6 @@
 {
   "name": "ssv-key-distributor-app",
-  "productName": "ssv-key-distributor-app",
+  "productName": "StarKeys",
   "description": "StarKeys — SSV KeyShare generator",
   "version": "0.1.0",
   "author": "StakeStar",
@@ -22,12 +22,15 @@
       "name": "ssv-key-distributor-app"
     },
     "forge": {
-      "packagerConfig": {},
+      "packagerConfig": {
+        "icon": "./assets/icon.icns"
+      },
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "ssv_key_distributor_app"
+            "name": "ssv_key_distributor_app",
+            "setupIcon": "./assets/icon.ico"
           }
         },
         {
@@ -35,15 +38,31 @@
           "platforms": [
             "darwin"
           ],
-          "config": {}
+          "config": {
+            "icon": "./assets/icon.icns"
+          }
         },
         {
           "name": "@electron-forge/maker-deb",
-          "config": {}
+          "config": {
+            "options": {
+              "icon": "./assets/icon.png"
+            }
+          }
         },
         {
           "name": "@electron-forge/maker-rpm",
-          "config": {}
+          "config": {
+            "options": {
+              "icon": "./assets/icon.png"
+            }
+          }
+        },
+        {
+          "name": "@electron-forge/maker-wix",
+          "config": {
+            "icon": "./assets/icon.ico"
+          }
         }
       ],
       "publishers": [
@@ -87,7 +106,7 @@
     "@electron-forge/maker-dmg": "^6.0.1",
     "@electron-forge/maker-rpm": "^6.0.1",
     "@electron-forge/maker-squirrel": "^6.0.1",
-    "@electron-forge/maker-zip": "^6.0.1",
+    "@electron-forge/maker-wix": "^6.0.1",
     "@electron-forge/plugin-webpack": "6.0.1",
     "@electron-forge/publisher-github": "^6.0.1",
     "@types/react": "^18.0.25",
@@ -102,7 +121,8 @@
     "crypto-browserify": "^3.12.0",
     "css-loader": "^6.7.2",
     "electron": "21.2.3",
-    "eslint": "8.27.0",
+    "electron-squirrel-startup": "^1.0.0",
+    "eslint": "8.22.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.31.10",
     "eslint-plugin-react-hooks": "^4.6.0",
@@ -129,7 +149,6 @@
     "antd": "^4.24.2",
     "bignumber.js": "^9.1.0",
     "classnames": "^2.3.2",
-    "electron-squirrel-startup": "^1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "ssv-keys": "https://github.com/bloxapp/ssv-keys.git"
