@@ -1,6 +1,6 @@
 {
   "name": "ssv-key-distributor-app",
-  "productName": "StarKeys",
+  "productName": "ssv-key-distributor-ap",
   "description": "StarKeys — SSV KeyShare generator",
   "version": "0.1.0",
   "author": "StakeStar",
@@ -18,9 +18,7 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "config": {
-    "packagerConfig": {
-      "name": "ssv-key-distributor-app"
-    },
+    "packagerConfig": {},
     "forge": {
       "makers": [
         {
