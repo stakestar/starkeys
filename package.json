@@ -18,7 +18,9 @@
     "lint": "eslint --ext .ts,.tsx ."
   },
   "config": {
-    "packagerConfig": {},
+    "packagerConfig": {
+      "name": "ssv-key-distributor-app"
+    },
     "forge": {
       "makers": [
         {
