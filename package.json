@@ -1,6 +1,6 @@
 {
   "name": "ssv-key-distributor-app",
-  "productName": "SSV Key Distributer",
+  "productName": "ssv-key-distributor-app",
   "description": "SSV Key Distributer",
   "version": "0.1.0",
   "author": "StakeStar",
@@ -19,7 +19,6 @@
   },
   "config": {
     "forge": {
-      "packagerConfig": {},
       "makers": [
         {
           "name": "@electron-forge/maker-squirrel",
