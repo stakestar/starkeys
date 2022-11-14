@@ -1,13 +1,13 @@
 {
-  "name": "ssv-key-distributor-app",
-  "productName": "ssv-key-distributor-app",
+  "name": "starkeys",
+  "productName": "starkeys",
   "description": "StarKeys — SSV KeyShare generator",
   "version": "0.1.0",
   "author": "StakeStar",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/onestaree/ssv-key-distributor-app.git"
+    "url": "git+https://github.com/stakestar/starkeys.git"
   },
   "main": ".webpack/main",
   "scripts": {
@@ -19,7 +19,7 @@
   },
   "config": {
     "packagerConfig": {
-      "name": "ssv-key-distributor-app"
+      "name": "starkeys"
     },
     "forge": {
       "packagerConfig": {
@@ -70,8 +70,8 @@
           "name": "@electron-forge/publisher-github",
           "config": {
             "repository": {
-              "owner": "onestaree",
-              "name": "ssv-key-distributor-app"
+              "owner": "stakestar",
+              "name": "starkeys"
             },
             "draft": true
           }
