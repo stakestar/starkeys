@@ -18,9 +18,9 @@ export function App() {
   return (
     <Layout className={styles.App}>
       <Header className={styles.Header}>
-        <Title className={styles.Title}>SSV Key Distributor</Title>
+        <Title className={styles.Title}>StarKeys</Title>
         <Text className={styles.Description} type="secondary">
-          Generate KeyShare file from your Keystore file
+          Generate SSV KeyShare file from your Keystore file
         </Text>
       </Header>
       <Content className={styles.Content}>
