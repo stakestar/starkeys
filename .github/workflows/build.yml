@@ -15,8 +15,6 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: yarn install
-    - name: yarn add crypto-browserify -D
-      run: yarn add crypto-browserify -D
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -31,8 +29,6 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: yarn install
-    - name: yarn add crypto-browserify -D
-      run: yarn add crypto-browserify -D
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -47,8 +43,6 @@ jobs:
         node-version: 18
     - name: install dependencies
       run: yarn install
-    - name: yarn add crypto-browserify -D
-      run: yarn add crypto-browserify -D
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
