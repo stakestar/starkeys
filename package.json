@@ -57,12 +57,6 @@
               "icon": "./assets/icon.png"
             }
           }
-        },
-        {
-          "name": "@electron-forge/maker-wix",
-          "config": {
-            "icon": "./assets/icon.ico"
-          }
         }
       ],
       "publishers": [
