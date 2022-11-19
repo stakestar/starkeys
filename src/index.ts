@@ -32,6 +32,10 @@ const createWindow = (): void => {
   })
 
   mainWindow.setMenuBarVisibility(false)
+
+  mainWindow.webContents.session.enableNetworkEmulation({
+    offline: true,
+  })
 }
 
 // This method will be called when Electron has finished

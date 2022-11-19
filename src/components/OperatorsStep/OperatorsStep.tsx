@@ -104,10 +104,9 @@ export function OperatorsStep() {
     <div className={styles.OperatorsStep}>
       <div className={styles.Row}>
         <Title level={4}>Parse CLI arguments (prefered)</Title>
-        <Input.TextArea
+        <Input
           placeholder="Input SSV cli arguments"
           onChange={({ target }) => parseCliArgs(target.value)}
-          rows={5}
         />
       </div>
       <div className={styles.Row}>

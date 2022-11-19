@@ -6,6 +6,12 @@ Fully offline alternative to the ssv-cli.
 
 Download the latest version on [release section](https://github.com/onestaree/ssv-key-distributor-app/releases).
 
+## Screenshots
+
+![screen 1](./docs/screenshots/screen1.png)
+![screen 2](./docs/screenshots/screen2.png)
+![screen 3](./docs/screenshots/screen3.png)
+
 ## Developent
 
 - `yarn` - Install dependencies

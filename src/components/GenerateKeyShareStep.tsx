@@ -27,10 +27,6 @@ export function GenerateKeyShareStep() {
       ssvAmount
     )
 
-    console.log(keyshare)
-
-    // generate name
-
     await saveFilePicker(`keyshare-${Math.round(Date.now() / 1000)}.json`, keyshare)
   }
 
