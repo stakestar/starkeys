@@ -29,7 +29,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "ssv_key_distributor_app",
+            "name": "starkeys",
             "setupIcon": "./assets/icon.ico"
           }
         },
