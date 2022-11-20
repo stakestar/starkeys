@@ -2,7 +2,7 @@
   "name": "starkeys",
   "productName": "starkeys",
   "description": "StarKeys — SSV KeyShare generator",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "StakeStar",
   "license": "MIT",
   "repository": {
@@ -67,7 +67,7 @@
               "owner": "stakestar",
               "name": "starkeys"
             },
-            "prerelease": true
+            "draft": true
           }
         }
       ],
