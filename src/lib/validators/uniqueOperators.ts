@@ -1,21 +1,33 @@
 import { Operator } from '../../providers'
 
-export const operatorPublicKeyValidator = (operators: Operator[]): Error|null => {
-  const error = new Error('Operators should be unique')
+type OperatorsUniqueValidatorReturnType = {
+  notUniqueOperatorsIds: Array<number>
+  notUniqueOperatorsPubkeys: Array<number>
+}
 
-  let operatorsIds:  Map<string, number>
-  let operatorsPublicKeys:  Map<string, number>
+export const operatorsUniqueValidator = (operators: Operator[]): OperatorsUniqueValidatorReturnType|null => {
+  const notUniqueOperatorsIds = []
+  const notUniqueOperatorsPubkeys = []
+
+  const operatorsIds:  Map<string, number> = new Map()
+  const operatorsPublicKeys:  Map<string, number> = new Map()
 
   for (let i = 0; i < operators.length; i++) {
+    console.log(operatorsIds)
     if (operatorsIds.has(operators[i].id)) {
-      return error
+      notUniqueOperatorsIds.push(i)
     }
-    operatorsPublicKeys.set(operators[i].publicKey, i)
+    operatorsIds.set(operators[i].id, i)
 
     if (operatorsPublicKeys.has(operators[i].publicKey)) {
-      return error
+      notUniqueOperatorsPubkeys.push(i)
     }
-    operatorsIds.set(operators[i].publicKey, i)
+    operatorsPublicKeys.set(operators[i].publicKey, i)
+  }
+
+  console.log(notUniqueOperatorsIds, notUniqueOperatorsPubkeys)
+  if (notUniqueOperatorsIds.length || notUniqueOperatorsPubkeys.length) {
+    return { notUniqueOperatorsIds, notUniqueOperatorsPubkeys }
   }
 
   return null

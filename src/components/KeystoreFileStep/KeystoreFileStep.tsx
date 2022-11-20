@@ -38,7 +38,6 @@ export function KeystoreFileStep() {
     setIsInvalidPass(false)
 
     if (!keystoreFile) {
-      console.log('???')
       setKeystoreFileError(true)
       isValid = false
     }
@@ -50,8 +49,6 @@ export function KeystoreFileStep() {
 
     if (isValid) {
       const fileContent = await readFileContent(keystoreFile)
-      console.log('fileContent', fileContent)
-      console.log('keystorePassword', keystorePassword)
       const privateKey = await validateKeystorePassword(fileContent, keystorePassword)
 
       if (privateKey) {

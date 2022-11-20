@@ -8,7 +8,7 @@ import { OperatorsStep } from './OperatorsStep'
 import { Steps } from './Steps'
 
 const { Header, Footer, Content } = Layout
-const { Title, Text, Link } = Typography
+const { Title, Link } = Typography
 
 export function App() {
   const {

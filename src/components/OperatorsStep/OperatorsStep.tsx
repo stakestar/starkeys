@@ -2,14 +2,17 @@ import { Button, Input, InputNumber, Typography } from 'antd'
 import Link from 'antd/lib/typography/Link'
 import classNames from 'classnames'
 import { useCallback, useState } from 'react'
-
 import { useAppState } from '../../hooks'
-import { operatorPublicKeyValidator, uint256Validator } from '../../lib'
+import { operatorPublicKeyValidator, operatorsUniqueValidator, uint256Validator } from '../../lib'
 import { parseCommandArgs } from '../../lib/utils'
 import { Operators } from './Operators'
 import styles from './OperatorsStep.module.scss'
 
 const { Title } = Typography
+
+const ERROR_EMPTY_FIELD = 'Please fill the fields above and try again'
+const ERROR_INVALID_INPUT = 'Invalid input'
+const ERROR_UNIQUE_OPERATORS = 'Operators should be unique'
 
 export function OperatorsStep() {
   const {
@@ -20,6 +23,7 @@ export function OperatorsStep() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   const parseCliArgs = useCallback(
     (args: string) => {
@@ -67,20 +71,51 @@ export function OperatorsStep() {
     const operatorsErrors = [...errors.operators]
     operators.forEach((operator, index) => {
       const publicKeyError = operatorPublicKeyValidator(operator.publicKey)
-      if (publicKeyError !== null) {
+
+      if (!operator.publicKey) {
         operatorsErrors[index].publicKey = true
+        setErrorMsg(ERROR_EMPTY_FIELD)
+        isValid = false
+      } else if (publicKeyError !== null) {
+        operatorsErrors[index].publicKey = true
+        setErrorMsg(ERROR_INVALID_INPUT)
         isValid = false
       } else {
         operatorsErrors[index].publicKey = false
       }
 
-      if (!operator.id || isNaN(Number(operator.id))) {
+      if (!operator.id) {
         operatorsErrors[index].id = true
+        setErrorMsg(ERROR_EMPTY_FIELD)
+        isValid = false
+      } else if (isNaN(Number(operator.id))) {
+        operatorsErrors[index].id = true
+        setErrorMsg(ERROR_INVALID_INPUT)
         isValid = false
       } else {
         operatorsErrors[index].id = false
       }
     })
+
+    const { notUniqueOperatorsIds, notUniqueOperatorsPubkeys } = operatorsUniqueValidator(operators)
+    if (isValid) {
+      if (notUniqueOperatorsIds.length) {
+        notUniqueOperatorsIds.forEach((index) => {
+          operatorsErrors[index].id = true
+          setErrorMsg(ERROR_UNIQUE_OPERATORS)
+          isValid = false
+        })
+      }
+
+      if (notUniqueOperatorsPubkeys.length) {
+        notUniqueOperatorsPubkeys.forEach((index) => {
+          operatorsErrors[index].publicKey = true
+          setErrorMsg(ERROR_UNIQUE_OPERATORS)
+          isValid = false
+        })
+      }
+    }
+
 
     setOperatorsError(operatorsErrors)
 
@@ -133,7 +168,7 @@ export function OperatorsStep() {
         />
       </div>
       <div className={classNames(styles.Error, { [styles.active]: isError })}>
-        Please fill the fields above and try again
+        {errorMsg || 'Please fill the fields above and try again'}
       </div>
       <Button
         className={styles.Next}
