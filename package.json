@@ -67,7 +67,7 @@
               "owner": "stakestar",
               "name": "starkeys"
             },
-            "draft": true
+            "prerelease": true
           }
         }
       ],
