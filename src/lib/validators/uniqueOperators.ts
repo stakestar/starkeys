@@ -13,7 +13,6 @@ export const operatorsUniqueValidator = (operators: Operator[]): OperatorsUnique
   const operatorsPublicKeys:  Map<string, number> = new Map()
 
   for (let i = 0; i < operators.length; i++) {
-    console.log(operatorsIds)
     if (operatorsIds.has(operators[i].id)) {
       notUniqueOperatorsIds.push(i)
     }
@@ -25,7 +24,6 @@ export const operatorsUniqueValidator = (operators: Operator[]): OperatorsUnique
     operatorsPublicKeys.set(operators[i].publicKey, i)
   }
 
-  console.log(notUniqueOperatorsIds, notUniqueOperatorsPubkeys)
   if (notUniqueOperatorsIds.length || notUniqueOperatorsPubkeys.length) {
     return { notUniqueOperatorsIds, notUniqueOperatorsPubkeys }
   }

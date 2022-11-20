@@ -97,8 +97,9 @@ export function OperatorsStep() {
       }
     })
 
-    const { notUniqueOperatorsIds, notUniqueOperatorsPubkeys } = operatorsUniqueValidator(operators)
-    if (isValid) {
+    const notUniqueOperators = operatorsUniqueValidator(operators)
+    if (isValid && notUniqueOperators !== null) {
+      const { notUniqueOperatorsIds, notUniqueOperatorsPubkeys } = notUniqueOperators
       if (notUniqueOperatorsIds.length) {
         notUniqueOperatorsIds.forEach((index) => {
           operatorsErrors[index].id = true
