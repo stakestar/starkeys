@@ -1,10 +1,13 @@
-import { Button, Input, InputNumber, Typography } from 'antd'
+import { Button, Input, InputNumber, Tooltip, Typography } from 'antd'
+import {
+  InfoCircleTwoTone
+} from '@ant-design/icons';
 import Link from 'antd/lib/typography/Link'
 import classNames from 'classnames'
 import { useCallback, useState } from 'react'
 import { useAppState } from '../../hooks'
 import { operatorPublicKeyValidator, operatorsUniqueValidator, uint256Validator } from '../../lib'
-import { parseCommandArgs } from '../../lib/utils'
+import { fromDecimal, parseCommandArgs, SSV_TOKEN_DECIMALS, toDecimal } from '../../lib/utils'
 import { Operators } from './Operators'
 import styles from './OperatorsStep.module.scss'
 
@@ -54,7 +57,7 @@ export function OperatorsStep() {
       }
 
       if (ssvTokenAmount.length) {
-        setSsvAmount(ssvTokenAmount)
+        setSsvAmount(toDecimal(ssvTokenAmount, SSV_TOKEN_DECIMALS).toString())
       }
     },
     [setOperators, setSsvAmount]
@@ -117,7 +120,6 @@ export function OperatorsStep() {
       }
     }
 
-
     setOperatorsError(operatorsErrors)
 
     const ssvAmountError = uint256Validator(ssvAmount)
@@ -139,9 +141,12 @@ export function OperatorsStep() {
   return (
     <div className={styles.OperatorsStep}>
       <div className={styles.Row}>
-        <Title level={4}>Parse CLI arguments (prefered)</Title>
+        <Title level={4}>Parse SSV arguments (recomended) 
+        <Tooltip placement="right" title={<>Arguments could be generated through the <Link href="https://app.ssv.network" target="_blank">app.ssv.network</Link></>}>
+          <InfoCircleTwoTone twoToneColor="#1890ff" style={{ marginLeft: '5px' }}/>
+        </Tooltip></Title>
         <Input
-          placeholder="Input SSV cli arguments"
+          placeholder="Input SSV arguments"
           onChange={({ target }) => parseCliArgs(target.value)}
         />
       </div>
@@ -156,7 +161,7 @@ export function OperatorsStep() {
         <Operators />
       </div>
       <div className={styles.Row}>
-        <Title level={4}>SSV to deposit</Title>
+        <Title level={4}>SSV to deposit <span className={styles.Optional}>(optional)</span></Title>
         <InputNumber
           className={styles.InputNumber}
           placeholder="Input SSV amount"

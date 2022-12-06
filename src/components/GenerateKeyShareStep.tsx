@@ -3,7 +3,7 @@ import { Button } from 'antd'
 
 import { useAppState } from '../hooks'
 import { generateKeyShares } from '../lib'
-import { saveFilePicker } from '../lib/utils'
+import { fromDecimal, saveFilePicker, SSV_TOKEN_DECIMALS } from '../lib/utils'
 import styles from './GenerateKeyShareStep.module.scss'
 
 export function GenerateKeyShareStep() {
@@ -24,7 +24,7 @@ export function GenerateKeyShareStep() {
       String(privateKey),
       operatorsIds,
       operatorsKeys,
-      ssvAmount
+      fromDecimal(ssvAmount, SSV_TOKEN_DECIMALS).toString()
     )
 
     await saveFilePicker(`keyshare-${Math.round(Date.now() / 1000)}.json`, keyshare)

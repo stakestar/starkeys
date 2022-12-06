@@ -8,7 +8,7 @@ import { OperatorsStep } from './OperatorsStep'
 import { Steps } from './Steps'
 
 const { Header, Footer, Content } = Layout
-const { Title, Link } = Typography
+const { Title, Link, Text } = Typography
 
 export function App() {
   const {
@@ -19,6 +19,9 @@ export function App() {
     <Layout className={styles.App}>
       <Header className={styles.Header}>
         <Title className={styles.Title}>StarKeys</Title>
+        <Text className={styles.Description} type="secondary">
+          Validator key distributor tool
+        </Text>
       </Header>
       <Content className={styles.Content}>
         <Steps />

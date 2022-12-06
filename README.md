@@ -1,4 +1,4 @@
-## StarKeys — SSV KeyShare generator
+## StarKeys — SSV Validator key distributor tool
 
 Electron based GUI util for key distribution for [ssv.network](https://ssv.network). Developed around [ssv-keys](https://github.com/bloxapp/ssv-keys) library.
 
