@@ -1,6 +1,7 @@
 import { Button, Input, InputNumber, Tooltip, Typography } from 'antd'
 import {
-  InfoCircleTwoTone
+  InfoCircleTwoTone,
+  ArrowDownOutlined
 } from '@ant-design/icons';
 import Link from 'antd/lib/typography/Link'
 import classNames from 'classnames'
@@ -140,24 +141,20 @@ export function OperatorsStep() {
 
   return (
     <div className={styles.OperatorsStep}>
-      <div className={styles.Row}>
-        <Title level={4}>Parse SSV arguments (recomended) 
+      <div className={styles.Row} style={{ marginBottom: '0.7rem'}}>
+        <Title level={4}>Input arguments
         <Tooltip placement="right" title={<>Arguments could be generated through the <Link href="https://app.ssv.network" target="_blank">app.ssv.network</Link></>}>
           <InfoCircleTwoTone twoToneColor="#1890ff" style={{ marginLeft: '5px' }}/>
         </Tooltip></Title>
         <Input
-          placeholder="Input SSV arguments"
+          placeholder="Input arguments"
           onChange={({ target }) => parseCliArgs(target.value)}
         />
       </div>
-      <div className={styles.Row}>
-        <Title level={4}>
-          or manually provide{' '}
-          <Link href="https://explorer.ssv.network/operators/" target="_blank">
-            Operators
-          </Link>{' '}
-          ids and keys
-        </Title>
+      <div className={styles.Row} style={{ marginBottom: '1.5rem'}}>
+        <div className={styles.Center} style={{ marginBottom: '0.7rem'}}>
+          <ArrowDownOutlined style={{ fontSize: '24px', color: '#1890ff' }}  />
+        </div>
         <Operators />
       </div>
       <div className={styles.Row}>

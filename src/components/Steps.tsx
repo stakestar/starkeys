@@ -10,11 +10,13 @@ export function Steps(): JSX.Element {
 
   return (
     <AntdSteps
+      type="navigation"
+      size="small"
       className={styles.Steps}
       current={currentStep}
       items={[
         {
-          title: 'Read Keystore',
+          title: 'Upload Keystore',
           description: ''
         },
         {
@@ -23,7 +25,7 @@ export function Steps(): JSX.Element {
           subTitle: ''
         },
         {
-          title: 'Generate KeyShare',
+          title: 'Generate Keyhhares',
           description: ''
         }
       ]}

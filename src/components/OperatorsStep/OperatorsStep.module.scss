@@ -1,7 +1,5 @@
 .OperatorsStep {
   .Row {
-    margin-bottom: 1.5rem;
-
     .InputNumber {
         display: flex;
     }
@@ -35,4 +33,10 @@
   .Optional {
     color: rgba(0, 0, 0, 0.45);
   }
+}
+
+.Center {
+  width: 100%;
+  display: flex;
+  justify-content: center;
 }

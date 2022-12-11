@@ -34,8 +34,8 @@ export function Operators() {
   return (
     <div>
       <div className={styles.Header}>
-        <Typography className={styles.Column1}>Id</Typography>
-        <Typography className={styles.Column2}>Public key</Typography>
+        <Typography className={styles.Column1}>Operator ID</Typography>
+        <Typography className={styles.Column2}>Operator Public Key</Typography>
       </div>
       {operators.map((operator, index) => (
         <Input.Group className={styles.Group} key={index} compact>

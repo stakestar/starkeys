@@ -25,7 +25,7 @@ export function KeystoreFileStep() {
 
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-  const [isInvalidPass, setIsInvalidPass] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
 
   const onClickNext = async () => {
     setKeystoreFileError(false)
@@ -35,7 +35,7 @@ export function KeystoreFileStep() {
 
     let isValid = true
     setIsError(false)
-    setIsInvalidPass(false)
+    setErrorMsg('')
 
     if (!keystoreFile) {
       setKeystoreFileError(true)
@@ -51,13 +51,12 @@ export function KeystoreFileStep() {
       const fileContent = await readFileContent(keystoreFile)
       const privateKey = await validateKeystorePassword(fileContent, keystorePassword)
 
-      if (privateKey) {
+      if (privateKey instanceof Error) {
+        setIsError(true)
+        setErrorMsg(privateKey.message)
+      } else {
         setPrivateKey(privateKey)
         setCurrentStep(1)
-      } else {
-        setIsError(true)
-        setIsInvalidPass(true)
-        console.error('privateKey', privateKey)
       }
     } else {
       setIsError(true)
@@ -83,7 +82,7 @@ export function KeystoreFileStep() {
         />
       </div>
       <div className={classNames(styles.Error, { [styles.active]: isError })}>
-        { isInvalidPass ? 'Invalid password' : 'Please fill the fields above and try again' }
+        { errorMsg ? errorMsg : 'Please fill the fields above and try again' }
         
       </div>
       <Button
