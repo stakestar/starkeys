@@ -1,5 +1,6 @@
-import { DownloadOutlined } from '@ant-design/icons'
+import { DownloadOutlined, CheckOutlined } from '@ant-design/icons'
 import { Button } from 'antd'
+import { useState } from 'react'
 
 import { useAppState } from '../hooks'
 import { generateKeyShares } from '../lib'
@@ -10,8 +11,10 @@ export function GenerateKeyShareStep() {
   const {
     values: { operators, ssvAmount, privateKey }
   } = useAppState()
+  const [isCreated, setIsCreated] = useState(false)
 
   const onDownload = async () => {
+    setIsCreated(false)
     const operatorsIds: Array<number> = []
     const operatorsKeys: Array<string> = []
 
@@ -28,6 +31,7 @@ export function GenerateKeyShareStep() {
     )
 
     await saveFilePicker(`keyshare-${Math.round(Date.now() / 1000)}.json`, keyshare)
+    setIsCreated(true)
   }
 
   return (
@@ -42,6 +46,11 @@ export function GenerateKeyShareStep() {
       >
         Generate KeyShare file
       </Button>
+      { isCreated &&
+        <div className={styles.Success}>
+          <CheckOutlined style={{ color: '#52c41a', marginRight: '5px' }}/> Keyshares file successfully created
+        </div>
+      }
     </div>
   )
 }
