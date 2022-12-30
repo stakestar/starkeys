@@ -4,6 +4,7 @@ const plugins = require('./webpack.plugins')
 module.exports = {
   module: { rules },
   plugins,
+  target: 'electron-renderer',
   resolve: {
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css'],
     fallback: {

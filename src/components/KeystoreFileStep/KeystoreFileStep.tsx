@@ -1,9 +1,8 @@
 import { Button, Input, Typography } from 'antd'
 import classNames from 'classnames'
 import { useState } from 'react'
-
+import { ipcRenderer } from 'electron'
 import { useAppState } from '../../hooks'
-import { validateKeystorePassword } from '../../lib'
 import { readFileContent } from '../../lib/utils'
 import { KeystoreFile } from './KeystoreFile'
 import styles from './KeystoreFileStep.module.scss'
@@ -27,15 +26,15 @@ export function KeystoreFileStep() {
   const [isError, setIsError] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
 
-  const onClickNext = async () => {
+  const onClickNext = () => {
     setKeystoreFileError(false)
     setKeystorePasswordError(false)
 
     setIsLoading(true)
 
-    let isValid = true
-    setIsError(false)
     setErrorMsg('')
+    setIsError(false)
+    let isValid = true
 
     if (!keystoreFile) {
       setKeystoreFileError(true)
@@ -48,22 +47,34 @@ export function KeystoreFileStep() {
     }
 
     if (isValid) {
-      const fileContent = await readFileContent(keystoreFile)
-      const privateKey = await validateKeystorePassword(fileContent, keystorePassword)
-
-      if (privateKey instanceof Error) {
-        setIsError(true)
-        setErrorMsg(privateKey.message)
-      } else {
-        setPrivateKey(privateKey)
-        setCurrentStep(1)
-      }
+      readFileContent(keystoreFile)
+        .then((fileContent) => {
+          ipcRenderer.invoke('validateKeystorePassword', fileContent, keystorePassword)
+          .then((privateKeyOrError) => {
+            if (privateKeyOrError instanceof Error) {
+              setIsError(true)
+              setErrorMsg(privateKeyOrError.message)
+              setIsLoading(false)
+            } else {
+              setPrivateKey(privateKeyOrError)
+              setCurrentStep(1)
+            }
+          })
+          .catch((err) => {
+            setIsError(true)
+            setErrorMsg(err.message)
+            setIsLoading(false)
+          })
+        })
+        .catch((err) => {
+          setIsError(true)
+          setErrorMsg(err.message)
+          setIsLoading(false)
+        })
     } else {
       setIsError(true)
-      console.error('isValid', isValid)
+      setIsLoading(false)
     }
-
-    setIsLoading(false)
   }
 
   return (
@@ -82,8 +93,8 @@ export function KeystoreFileStep() {
         />
       </div>
       <div className={classNames(styles.Error, { [styles.active]: isError })}>
-        { errorMsg ? errorMsg : 'Please fill the fields above and try again' }
-        
+        {errorMsg ? errorMsg : 'Please fill the fields above and try again'}
+
       </div>
       <Button
         className={styles.Next}

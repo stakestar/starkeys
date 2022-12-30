@@ -6,18 +6,8 @@ const invalidFileError = new Error('Invalid keystore file')
 export const validateKeystorePassword = async (
   keyStoreData: string,
   password: string
-): Promise<string | Error> => {
-  let keyStore: EthereumKeyStore
+): Promise<string> => {
+  const keyStore = new EthereumKeyStore(keyStoreData)
 
-  try {
-    keyStore = new EthereumKeyStore(keyStoreData)
-  } catch (err) {
-    return invalidFileError
-  }
-
-  try {
-    return keyStore.getPrivateKey(password)
-  } catch (err) {
-    return invalidPassError
-  }
+  return keyStore.getPrivateKey(password)
 }
