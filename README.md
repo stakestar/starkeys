@@ -4,7 +4,7 @@ Electron based GUI util for key distribution for [ssv.network](https://ssv.netwo
 
 Fully offline alternative to the ssv-cli.
 
-Download the latest version on [release section](https://github.com/onestaree/ssv-key-distributor-app/releases).
+Download the latest version on [release section](https://github.com/stakestar/starkeys/releases).
 
 ## Screenshots
 
