@@ -25,7 +25,7 @@ export function Steps(): JSX.Element {
           subTitle: ''
         },
         {
-          title: 'Generate Keyhhares',
+          title: 'Generate Keyshares',
           description: ''
         }
       ]}
