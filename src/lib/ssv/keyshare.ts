@@ -1,4 +1,5 @@
 import { KeyShares, SSVKeys } from 'ssv-keys'
+import bls from '../bls'
 
 export const generateKeyShares = async (
   privateKey: string,
@@ -6,27 +7,34 @@ export const generateKeyShares = async (
   operatorKeys: Array<string>,
   ssvAmount: string
 ) => {
-  const ssvKeys = new SSVKeys()
+  const ssvKeys = new SSVKeys(SSVKeys.VERSION.V3)
 
-  const shares = await ssvKeys.buildShares(privateKey, operatorIds, operatorKeys)
+  await bls.init(bls.BLS12_381);
+  ssvKeys.privateKey = `0x${bls.deserializeHexStrToSecretKey(privateKey).serializeToHexStr()}`
+  ssvKeys.publicKey = `0x${bls.deserializeHexStrToSecretKey(privateKey).getPublicKey().serializeToHexStr()}`
 
-  const keyShares = await KeyShares.fromData({ version: 'v2' })
-  await keyShares.setData({
-    operators: operatorKeys.map((operator: string, index: number) => ({
-      id: operatorIds[index],
-      publicKey: operator
-    })),
-    publicKey: ssvKeys.getValidatorPublicKey(),
-    shares
-  })
+  const encryptedShares = await ssvKeys.buildShares(privateKey, operatorIds, operatorKeys)
 
   const payload = await ssvKeys.buildPayload(
-    ssvKeys.getValidatorPublicKey(),
-    operatorIds,
-    shares,
-    ssvAmount
+    {
+      publicKey: ssvKeys.publicKey,
+      operatorIds,
+      encryptedShares,
+    }
   )
-  await keyShares.setPayload(payload)
 
-  return keyShares.toString()
+  const keyShares = ssvKeys.keyShares.fromJson({
+    version: 'v3',
+    data: {
+      operators: operatorKeys.map((operator, index) => ({
+        id: operatorIds[index],
+        publicKey: operator,
+      })),
+      publicKey: ssvKeys.publicKey,
+      encryptedShares,
+    },
+    payload,
+  })
+
+  return keyShares.toJson()
 }
