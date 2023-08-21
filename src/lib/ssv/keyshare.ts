@@ -1,39 +1,48 @@
 import { KeyShares, SSVKeys } from 'ssv-keys'
 import bls from '../bls'
+import { IOperator } from 'ssv-keys/dist/tsc/src/lib/KeyShares/KeySharesData/IOperator'
+import { Operator } from '../../providers'
+
+const convertOperatorToIOperator = (operators: Array<Operator>): Array<IOperator> => {
+  return operators.map((operator) => {
+    return {
+      id: Number(operator.id),
+      operatorKey: operator.publicKey
+    }
+  })
+}
 
 export const generateKeyShares = async (
   privateKey: string,
-  operatorIds: Array<number>,
-  operatorKeys: Array<string>,
-  ssvAmount: string
+  operatorsArray: Operator[],
+  ownerAddress: string,
+  ownerNonce: number
 ) => {
-  const ssvKeys = new SSVKeys(SSVKeys.VERSION.V3)
+  const ssvKeys = new SSVKeys()
 
-  await bls.init(bls.BLS12_381);
-  ssvKeys.privateKey = `0x${bls.deserializeHexStrToSecretKey(privateKey).serializeToHexStr()}`
-  ssvKeys.publicKey = `0x${bls.deserializeHexStrToSecretKey(privateKey).getPublicKey().serializeToHexStr()}`
+  await bls.init(bls.BLS12_381)
+  const hexedPrivateKey = `0x${bls.deserializeHexStrToSecretKey(privateKey).serializeToHexStr()}`
+  const publicKey = `0x${bls.deserializeHexStrToSecretKey(privateKey).getPublicKey().serializeToHexStr()}`
 
-  const encryptedShares = await ssvKeys.buildShares(privateKey, operatorIds, operatorKeys)
+  const operators = convertOperatorToIOperator(operatorsArray)
+  const encryptedShares = await ssvKeys.buildShares(hexedPrivateKey, operators)
 
-  const payload = await ssvKeys.buildPayload(
-    {
-      publicKey: ssvKeys.publicKey,
-      operatorIds,
-      encryptedShares,
-    }
-  )
+  const keyShares = new KeyShares()
+  await keyShares.update({
+    ownerAddress,
+    ownerNonce,
+    operators,
+    publicKey,
+  });
 
-  const keyShares = ssvKeys.keyShares.fromJson({
-    version: 'v3',
-    data: {
-      operators: operatorKeys.map((operator, index) => ({
-        id: operatorIds[index],
-        publicKey: operator,
-      })),
-      publicKey: ssvKeys.publicKey,
-      encryptedShares,
-    },
-    payload,
+  await keyShares.buildPayload({
+    publicKey,
+    operators,
+    encryptedShares,
+  }, {
+    ownerAddress,
+    ownerNonce,
+    privateKey,
   })
 
   return keyShares.toJson()

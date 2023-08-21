@@ -24,7 +24,8 @@ export type AppStateProviderValue = {
     keystorePassword: string
     privateKey: string
     operators: Operator[]
-    ssvAmount: string,
+    ownerAddress: string,
+    ownerNonce: number,
     currentStep: number
   }
   actions: {
@@ -32,11 +33,13 @@ export type AppStateProviderValue = {
     setKeystorePassword: Dispatch<SetStateAction<string>>
     setPrivateKey: Dispatch<SetStateAction<string>>
     setOperators: Dispatch<SetStateAction<Operator[]>>
-    setSsvAmount: Dispatch<SetStateAction<string>>
+    setOwnerAddress: Dispatch<SetStateAction<string>>
+    setOwnerNonce: Dispatch<SetStateAction<number>>
     setKeystoreFileError: Dispatch<SetStateAction<boolean>>
     setKeystorePasswordError: Dispatch<SetStateAction<boolean>>
     setOperatorsError: Dispatch<SetStateAction<OperatorError[]>>
-    setSsvAmountError: Dispatch<SetStateAction<string|null>>,
+    setOwnerAddressError: Dispatch<SetStateAction<string|null>>,
+    setOwnerNonceError: Dispatch<SetStateAction<string|null>>,
     setCurrentStep: Dispatch<SetStateAction<number>>
     reset: Dispatch<void>
   }
@@ -44,7 +47,8 @@ export type AppStateProviderValue = {
     keystoreFile: boolean
     keystorePassword: boolean
     operators: OperatorError[]
-    ssvAmount: string|null
+    ownerAddress: string|null
+    ownerNonce: string|null
   }
 }
 
@@ -63,14 +67,17 @@ export function AppStateProvider({
   const [keystoreFile, setKeystoreFile] = useState<RcFile>(null)
   const [keystorePassword, setKeystorePassword] = useState('')
   const [privateKey, setPrivateKey] = useState('')
-  const [ssvAmount, setSsvAmount] = useState('')
+  const [ownerAddress, setOwnerAddress] = useState('')
+  const [ownerNonce, setOwnerNonce] = useState(null)
+
   const [operators, setOperators] = useState<Operator[]>(
     Array.from({ length: requiredOperatorsCount }, () => ({ id: '', publicKey: '' }))
   )
 
   const [keystoreFileError, setKeystoreFileError] = useState(false)
   const [keystorePasswordError, setKeystorePasswordError] = useState(false)
-  const [ssvAmountError, setSsvAmountError] = useState(null)
+  const [ownerAddressError, setOwnerAddressError] = useState(null)
+  const [ownerNonceError, setOwnerNonceError] = useState(null)
   const [operatorsError, setOperatorsError] = useState<OperatorError[]>(
     Array.from({ length: requiredOperatorsCount }, () => ({ id: false, publicKey: false }))
   )
@@ -81,12 +88,14 @@ export function AppStateProvider({
     setKeystoreFile(null)
     setKeystorePassword('')
     setPrivateKey('')
-    setSsvAmount('')
+    setOwnerAddress('')
+    setOwnerNonce(null)
     setOperators([])
 
     setKeystoreFileError(false)
     setKeystorePasswordError(false)
-    setSsvAmountError(false)
+    setOwnerAddressError(null)
+    setOwnerNonceError(null)
     setOperatorsError([])
   }
 
@@ -96,10 +105,12 @@ export function AppStateProvider({
       setKeystorePassword,
       setPrivateKey,
       setOperators,
-      setSsvAmount,
+      setOwnerAddress,
+      setOwnerNonce,
       setKeystoreFileError,
       setKeystorePasswordError,
-      setSsvAmountError,
+      setOwnerAddressError,
+      setOwnerNonceError,
       setOperatorsError,
       setCurrentStep,
       reset
@@ -107,16 +118,17 @@ export function AppStateProvider({
     []
   )
 
-  const values = { keystoreFile, keystorePassword, operators, ssvAmount, privateKey, currentStep }
+  const values = { keystoreFile, keystorePassword, operators, ownerAddress, ownerNonce, privateKey, currentStep }
 
   const errors = useMemo(
     () => ({
       keystoreFile: keystoreFileError,
       keystorePassword: keystorePasswordError,
       operators: operatorsError,
-      ssvAmount: ssvAmountError
+      ownerAddress: ownerAddressError,
+      ownerNonce: ownerNonceError,
     }),
-    [keystoreFileError, keystorePasswordError, operatorsError, ssvAmountError]
+    [keystoreFileError, keystorePasswordError, operatorsError, ownerAddressError, ownerNonceError]
   )
 
   return (

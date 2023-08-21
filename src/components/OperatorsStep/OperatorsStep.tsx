@@ -7,8 +7,8 @@ import Link from 'antd/lib/typography/Link'
 import classNames from 'classnames'
 import { useCallback, useState } from 'react'
 import { useAppState } from '../../hooks'
-import { operatorPublicKeyValidator, operatorsUniqueValidator, uint256Validator } from '../../lib'
-import { fromDecimal, parseCommandArgs, SSV_TOKEN_DECIMALS, toDecimal } from '../../lib/utils'
+import { operatorPublicKeyValidator, operatorsUniqueValidator, isValidAddress } from '../../lib'
+import { parseCommandArgs } from '../../lib/utils'
 import { Operators } from './Operators'
 import styles from './OperatorsStep.module.scss'
 
@@ -20,8 +20,8 @@ const ERROR_UNIQUE_OPERATORS = 'Operators should be unique'
 
 export function OperatorsStep() {
   const {
-    actions: { setSsvAmount, setOperatorsError, setSsvAmountError, setCurrentStep, setOperators },
-    values: { operators, ssvAmount },
+    actions: { setOwnerAddress, setOwnerNonce, setOperatorsError, setOwnerNonceError, setOwnerAddressError, setCurrentStep, setOperators },
+    values: { operators, ownerAddress, ownerNonce },
     errors
   } = useAppState()
 
@@ -31,7 +31,7 @@ export function OperatorsStep() {
 
   const parseCliArgs = useCallback(
     (args: string) => {
-      const { operatorsIds, operatorsKeys, ssvTokenAmount } = parseCommandArgs(args)
+      const { operatorsIds, operatorsKeys, ownerAddress, ownerNonce } = parseCommandArgs(args)
 
       if (operatorsIds.length) {
         setOperators((currentOperators) => {
@@ -57,16 +57,21 @@ export function OperatorsStep() {
         })
       }
 
-      if (ssvTokenAmount.length) {
-        setSsvAmount(toDecimal(ssvTokenAmount, SSV_TOKEN_DECIMALS).toString())
+      if (ownerAddress.length) {
+        setOwnerAddress(ownerAddress)
+      }
+
+      if (ownerNonce) {
+        setOwnerNonce(ownerNonce)
       }
     },
-    [setOperators, setSsvAmount]
+    [setOperators, setOwnerNonce, setOwnerAddress]
   )
 
   const onClickNext = async () => {
     setIsLoading(true)
-    setSsvAmountError('')
+    setOwnerNonceError('')
+    setOwnerAddressError('')
     setOperatorsError([])
 
     let isValid = true
@@ -123,11 +128,12 @@ export function OperatorsStep() {
 
     setOperatorsError(operatorsErrors)
 
-    const ssvAmountError = uint256Validator(ssvAmount)
+    if (!isValidAddress(ownerAddress)) {
+      setOwnerAddressError('Invalid address')
+    }
 
-    if (ssvAmountError !== null) {
-      setSsvAmountError(ssvAmountError.message)
-      isValid = false
+    if (isNaN(ownerNonce)) {
+      setOwnerNonceError('Invalid nonce')
     }
 
     if (isValid) {
@@ -158,16 +164,24 @@ export function OperatorsStep() {
         <Operators />
       </div>
       <div className={styles.Row}>
-        <Title level={4}>SSV to deposit <span className={styles.Optional}>(optional)</span></Title>
+        <Title level={4}>Owner Address</Title>
+        <Input
+          placeholder="Input Owner Address"
+          onChange={({ target }) => setOwnerAddress(target.value)}
+          value={ownerAddress}
+          status={errors.ownerAddress ? 'error' : null}
+        />
+      </div>
+      <div className={styles.Row}>
+        <Title level={4}>Owner Nonce</Title>
         <InputNumber
           className={styles.InputNumber}
-          placeholder="Input SSV amount"
-          addonAfter="SSV"
-          onChange={(value) => setSsvAmount(value)}
-          value={ssvAmount}
-          status={errors.ssvAmount ? 'error' : null}
+          placeholder="Input Owner Nonce"
+          onChange={(value) => setOwnerNonce(value)}
+          value={ownerNonce}
+          status={errors.ownerNonce ? 'error' : null}
           type="number"
-          min="0"
+          min={0}
         />
       </div>
       <div className={classNames(styles.Error, { [styles.active]: isError })}>
