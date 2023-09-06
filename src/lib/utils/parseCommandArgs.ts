@@ -6,13 +6,13 @@ type ParsedCommandArgs = {
 }
 
 const argumentsNames = {
-  operatorsKeys: '--operators-keys=',
+  operatorsKeys: '--operator-keys=',
   operatorsKeysShort: '-oks=',
-  operatorsIds: '--operators-ids=',
+  operatorsIds: '--operator-ids=',
   operatorsIdsShort: '-oids=',
   ownerAddress: '--owner-address=',
   ownerAddressShort: '-oa=',
-  ownerNonce: '--owner-nonce',
+  ownerNonce: '--owner-nonce=',
   ownerNonceShort: '-on=',
 }
 
