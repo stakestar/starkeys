@@ -29,6 +29,8 @@ jobs:
         node-version: 16
     - name: install dependencies
       run: yarn install
+    - name: hack
+      run: npm install -g macos-alias
     - name: publish
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
